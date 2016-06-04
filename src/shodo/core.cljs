@@ -44,6 +44,9 @@
          id
          new-text))
 
+(defn clear-finished-todo []
+  (swap! the-list (fn [l] (vector (filter (fn [x] (not (:checked x))) l)))))
+
 
 ;; -------------------------
 ;; Initialize app
