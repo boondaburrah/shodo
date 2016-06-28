@@ -44,16 +44,18 @@
 ;; -------------------------
 ;; Views
 
-(defn display-todo [id]
-  (let [the-todo (nth (deref the-list) id)]
-    [:li {:class (str (if (:checked the-todo) "finished" "unfinished"))}
-      [:input {:type "checkbox" :checked (:checked the-todo) :on-change (fn [] (toggle-todo id))}]
-      [:label (str (:body the-todo))]]))
+(defn display-todo [id the-todo]
+  [:li {:class (str (if (:checked the-todo) "finished" "unfinished"))}
+    [:input {:type "checkbox"
+             :checked (:checked the-todo)
+             :on-change (fn [] (toggle-todo id))
+             :id (str "todo-" id)}]
+    [:label {:for (str "todo-" id)} (str (:body the-todo))]])
 
 (defn home-page []
   [:div
    [:h1 "todos"]
-   [:ul (map-indexed (fn [id item] (display-todo id)) (deref the-list))]])
+   [:ul (map-indexed display-todo (deref the-list))]])
 
 ;; -------------------------
 ;; Initialize app
