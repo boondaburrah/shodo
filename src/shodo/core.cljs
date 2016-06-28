@@ -47,13 +47,13 @@
 (defn display-todo [id]
   (let [the-todo (nth (deref the-list) id)]
     [:li {:class (str (if (:checked the-todo) "finished" "unfinished"))}
-      [:input {:type "checkbox" :checked (:checked the-todo) :on-change #(toggle-todo id)}]
+      [:input {:type "checkbox" :checked (:checked the-todo) :on-change (fn [] (toggle-todo id))}]
       [:label (str (:body the-todo))]]))
 
 (defn home-page []
   [:div
    [:h1 "todos"]
-   [:ul (display-todo 1)]])
+   [:ul (map-indexed (fn [id item] (display-todo id)) (deref the-list))]])
 
 ;; -------------------------
 ;; Initialize app
