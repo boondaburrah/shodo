@@ -55,7 +55,8 @@
 (defn home-page []
   [:div
    [:h1 "todos"]
-   [:ul (map-indexed display-todo (deref the-list))]])
+   [:ul (map-indexed display-todo (deref the-list))]
+   [:button {:on-click clear-finished-todo} "Clear Done"]])
 
 ;; -------------------------
 ;; Initialize app
