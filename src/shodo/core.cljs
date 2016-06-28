@@ -11,13 +11,6 @@
 (defrecord todo [checked body])
 
 ;; -------------------------
-;; Views
-
-(defn home-page []
-  [:div
-   [:h1 "todos"]])
-
-;; -------------------------
 ;; Controllers
 
 (defn add-todo [text]
@@ -49,7 +42,28 @@
 
 
 ;; -------------------------
+;; Views
+
+(defn display-todo [id]
+  (let [the-todo (nth (deref the-list) id)]
+    [:li {:class (str (if (:checked the-todo) "finished" "unfinished"))}
+      [:input {:type "checkbox" :checked (:checked the-todo) :on-change #(toggle-todo id)}]
+      [:label (str (:body the-todo))]]))
+
+(defn home-page []
+  [:div
+   [:h1 "todos"]
+   [:ul (display-todo 1)]])
+
+;; -------------------------
 ;; Initialize app
+
+(defonce init
+  (do
+    (add-todo "Actually write any react stuff")
+    (add-todo "get this published somewhere")
+    (add-todo "Make subtitleparty")
+    (add-todo "Profit?")))
 
 (defn mount-root []
   (r/render [home-page] (.getElementById js/document "app")))
