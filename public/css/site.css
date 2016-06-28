@@ -32,3 +32,12 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.unfinished {
+  list-style: none;
+}
+
+.finished {
+  list-style: none;
+  text-decoration: line-through;
+}
